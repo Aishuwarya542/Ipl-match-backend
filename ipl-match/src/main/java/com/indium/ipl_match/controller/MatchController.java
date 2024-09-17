@@ -140,7 +140,6 @@ public class MatchController {
         }
     }
 
-
     // to display the list of the required number of top batsmen -- Query 4
     @Operation(
             summary = "Get top batsmen",

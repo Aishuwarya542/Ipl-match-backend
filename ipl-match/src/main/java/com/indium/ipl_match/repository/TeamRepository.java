@@ -7,6 +7,4 @@ import java.util.Optional;
 
 public interface TeamRepository extends CrudRepository<Team, Integer> {
 
-    Optional<Team> findByTeamName(String teamName);
-
 }

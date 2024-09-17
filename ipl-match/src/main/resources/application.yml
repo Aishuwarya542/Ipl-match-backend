@@ -25,15 +25,9 @@ spring:
       port: 6379
     cache:
       type: redis
-  management:
-    endpoints:
-      web:
-        exposure:
-          include: '*'
-    endpoint:
-      health:
-        show-details: always
-      shutdown:
-        enabled: true
+  security:
+    user:
+      name: aishu
+      password: aishu123
 server:
   port: 8085

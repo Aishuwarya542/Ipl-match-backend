@@ -63,23 +63,15 @@ public class MatchInsertServiceTest {
 
     @BeforeEach
     public void setUp() {
-        // Mocking the repository save methods
         Mockito.when(metaRepository.save(any(Meta.class))).thenReturn(new Meta());
         Mockito.when(matchInfoRepository.save(any(MatchInfo.class))).thenReturn(new MatchInfo());
         Mockito.when(teamRepository.save(any(Team.class))).thenReturn(new Team());
-//        Mockito.when(playerRepository.save(any(Player.class))).thenReturn(new Player());
-        // Mock other repository save methods similarly if needed...
     }
 
     @Test
     public void testInsertMatchData() throws IOException {
-        // Sample valid JSON data for testing
         String jsonContent = "{ \"meta\": { \"data_version\": \"1.0\", \"created\": \"2023-09-15\", \"revision\": 1 }, \"info\": { \"event\": { \"match_number\": 100 }, \"city\": \"City A\", \"dates\": [\"2023-09-15\"], \"venue\": \"Venue A\", \"season\": \"Season 2023\", \"match_type\": \"Test\", \"gender\": \"male\", \"overs\": 50, \"event\": { \"name\": \"Event A\" }, \"player_of_match\": [\"Player 1\"], \"outcome\": { \"winner\": \"Team A\", \"by\": { \"runs\": 100 } }, \"teams\": [\"Team A\", \"Team B\"], \"toss\": { \"winner\": \"Team A\", \"decision\": \"bat\" } } }";
-
-        // Call the method to test
         matchInsertService.insertMatchData(jsonContent);
-
-        // Assertions or verification can be done here
         Mockito.verify(metaRepository, Mockito.times(1)).save(any(Meta.class));
         Mockito.verify(matchInfoRepository, Mockito.times(1)).save(any(MatchInfo.class));
         Mockito.verify(teamRepository, Mockito.times(2)).save(any(Team.class));  // Expecting 2 teams
@@ -87,21 +79,15 @@ public class MatchInsertServiceTest {
 
     @Test
     public void testInsertMetaAndMatchInfo() throws IOException {
-        // Sample JSON data for meta and match info
         String jsonContent = "{ \"meta\": { \"data_version\": \"1.0\", \"created\": \"2023-09-15\", \"revision\": 1 }, \"info\": { \"event\": { \"match_number\": 100 }, \"city\": \"City A\", \"dates\": [\"2023-09-15\"], \"venue\": \"Venue A\", \"season\": \"Season 2023\", \"match_type\": \"Test\", \"gender\": \"male\", \"overs\": 50, \"event\": { \"name\": \"Event A\" }, \"player_of_match\": [\"Player 1\"], \"outcome\": { \"winner\": \"Team A\", \"by\": { \"runs\": 100 } }, \"teams\": [\"Team A\", \"Team B\"] } }";
-
-        // Call the method to test
         matchInsertService.insertMatchData(jsonContent);
 
-        // Capture the Meta object passed to the save method
         ArgumentCaptor<Meta> metaCaptor = ArgumentCaptor.forClass(Meta.class);
         Mockito.verify(metaRepository).save(metaCaptor.capture());
         Meta savedMeta = metaCaptor.getValue();
 
-        // Print the captured Meta object for debugging
         System.out.println("Saved Meta: " + savedMeta);
 
-        // Assertions to verify the saved values
         assertEquals("1.0", savedMeta.getDataVersion(), "Expected data version 1.0");
         assertEquals(LocalDate.of(2023, 9, 15), savedMeta.getCreated(), "Expected created date to be 2023-09-15");
         assertEquals(1, savedMeta.getRevision(), "Expected revision to be 1");
@@ -111,33 +97,25 @@ public class MatchInsertServiceTest {
 
     @Test
     public void testInsertMatchOfficials() throws IOException {
-        // Sample JSON for testing officials insertion
         String jsonContent = "{ \"meta\": { \"data_version\": \"1.0\", \"created\": \"2023-09-15\", \"revision\": 1 }, \"info\": { \"event\": { \"match_number\": 100 }, \"city\": \"City A\", \"dates\": [\"2023-09-15\"], \"venue\": \"Venue A\", \"season\": \"Season 2023\", \"match_type\": \"Test\", \"gender\": \"male\", \"overs\": 50, \"event\": { \"name\": \"Event A\" }, \"player_of_match\": [\"Player 1\"], \"outcome\": { \"winner\": \"Team A\", \"by\": { \"runs\": 100 } }, \"teams\": [\"Team A\", \"Team B\"], \"officials\": { \"umpire\": [\"Official A\", \"Official B\"], \"referee\": [\"Official C\"] } } }";
 
-        // Call the method to test
         matchInsertService.insertMatchData(jsonContent);
 
-        // Verify that the officialRepository's save method was called for each official
-        Mockito.verify(officialRepository, Mockito.times(3)).save(any(Official.class));  // Expecting 3 officials (2 umpires, 1 referee)
+        Mockito.verify(officialRepository, Mockito.times(3)).save(any(Official.class));
     }
 
     @Test
     public void testInsertMatchInfo() throws IOException {
-        // Sample JSON data for testing match info insertion
         String jsonContent = "{ \"meta\": { \"data_version\": \"1.0\", \"created\": \"2023-09-15\", \"revision\": 1 }, \"info\": { \"event\": { \"match_number\": 0 }, \"city\": \"City B\", \"dates\": [\"2023-09-16\"], \"venue\": \"Venue B\", \"season\": \"Season 2023\", \"match_type\": \"ODI\", \"gender\": \"female\", \"overs\": 50, \"event\": { \"name\": \"Event B\" }, \"player_of_match\": [\"Player 2\"], \"outcome\": { \"winner\": \"Team B\", \"by\": { \"runs\": 150 } }, \"teams\": [\"Team A\", \"Team B\"] } }";
 
-        // Call the method to test
         matchInsertService.insertMatchData(jsonContent);
 
-        // Capture the MatchInfo object passed to the save method
         ArgumentCaptor<MatchInfo> matchInfoCaptor = ArgumentCaptor.forClass(MatchInfo.class);
         Mockito.verify(matchInfoRepository).save(matchInfoCaptor.capture());
         MatchInfo savedMatchInfo = matchInfoCaptor.getValue();
 
-        // Print the captured MatchInfo object for debugging
         System.out.println("Saved MatchInfo: " + savedMatchInfo);
 
-        // Assertions to verify the saved values
         assertEquals(0, savedMatchInfo.getMatchNumber(), "Expected match number to be 0");
         assertEquals("City B", savedMatchInfo.getCity(), "Expected city to be City B");
         assertEquals(LocalDate.of(2023, 9, 16), savedMatchInfo.getDate(), "Expected date to be 2023-09-16");
@@ -150,21 +128,5 @@ public class MatchInsertServiceTest {
         assertEquals("Team B", savedMatchInfo.getWinner(), "Expected winner to be Team B");
         assertEquals(150, savedMatchInfo.getOutcomeByRuns(), "Expected outcome by runs to be 150");
     }
-
-//    @Test
-//    public void testInsertInningsAndOvers() throws IOException {
-//        // Sample JSON for testing innings and overs insertion
-//        String jsonContent = "{ \"meta\": { \"data_version\": \"1.0\", \"created\": \"2023-09-15\", \"revision\": 1 }, \"info\": { \"event\": { \"match_number\": 100 }, \"city\": \"City A\", \"dates\": [\"2023-09-15\"], \"venue\": \"Venue A\", \"season\": \"Season 2023\", \"match_type\": \"Test\", \"gender\": \"male\", \"overs\": 50, \"event\": { \"name\": \"Event A\" }, \"player_of_match\": [\"Player 1\"], \"outcome\": { \"winner\": \"Team A\", \"by\": { \"runs\": 100 } }, \"teams\": [\"Team A\", \"Team B\"], \"innings\": [{ \"team\": \"Team A\", \"overs\": [{ \"over\": 1, \"deliveries\": [{ \"batter\": \"Player 1\", \"bowler\": \"Player 2\", \"runs\": { \"batter\": 4, \"total\": 4 } }] }] }] } }";
-//
-//        // Call the method to test
-//        matchInsertService.insertMatchData(jsonContent);
-//
-//        // Verify that inningRepository's save method was called once
-//        Mockito.verify(inningRepository, Mockito.times(1)).save(any(Inning.class));  // Expecting 1 inning
-//
-//        // Verify that overRepository's save method was called for each over
-//        Mockito.verify(overRepository, Mockito.times(1)).save(any(Overs.class));  // Expecting 1 over
-//    }
-
 }
 

@@ -65,4 +65,3 @@ public class MatchQueryService {
         return playerRepository.findTopBatsmenWithNameAndId(PageRequest.of(0, numberOfPlayers)).getContent();
     }
 }
-

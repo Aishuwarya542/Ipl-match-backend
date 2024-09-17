@@ -61,14 +61,13 @@ public class MatchInsertService {
     public void insertMatchData(String jsonContent) throws IOException {
         // Parse the JSON content
         JsonNode rootNode = objectMapper.readTree(jsonContent);
-
         // Insert Meta data
         JsonNode metaNode = rootNode.path("meta");
         Meta meta = new Meta();
         meta.setDataVersion(metaNode.path("data_version").asText());
 
 // Parse the date string safely
-        String createdStr = metaNode.path("created").asText(null); // Use null as default if "created" is missing
+        String createdStr = metaNode.path("created").asText(null);
         if (createdStr != null && !createdStr.isEmpty()) {
             try {
                 LocalDate createdDate = LocalDate.parse(createdStr);
@@ -81,12 +80,8 @@ public class MatchInsertService {
             System.err.println("Created date is missing or empty");
             throw new RuntimeException("Date parsing failed: Created date is missing or empty");
         }
-
         meta.setRevision(metaNode.path("revision").asInt());
-
-// Save meta entity
         Meta savedMeta = metaRepository.save(meta);
-
 
         // Insert Match Info
         JsonNode matchInfoNode = rootNode.path("info");
@@ -145,8 +140,6 @@ public class MatchInsertService {
                 });
             }
         });
-
-
         // Insert Officials
         JsonNode officialsNode = matchInfoNode.path("officials");
         officialsNode.fields().forEachRemaining(entry -> {
@@ -159,7 +152,6 @@ public class MatchInsertService {
                 officialRepository.save(official);
             });
         });
-
         // Insert Innings
         JsonNode inningsNode = rootNode.path("innings");
         for (JsonNode inningNode : inningsNode) {
@@ -189,7 +181,6 @@ public class MatchInsertService {
                 over.setInning(savedInning);
                 over.setOverNumber(overNode.path("over").asInt());
                 Overs savedOver = overRepository.save(over);  // Save the over to get the ID
-
 
                 // Insert Deliveries
                 JsonNode deliveriesNode = overNode.path("deliveries");
@@ -227,7 +218,6 @@ public class MatchInsertService {
                 powerplay.setFromOver(powerplayData.path("from").floatValue());
                 powerplay.setToOver(powerplayData.path("to").floatValue());
                 powerplay.setType(powerplayData.path("type").asText());
-
                 powerplayRepository.save(powerplay);
             }
         }
@@ -238,6 +228,5 @@ public class MatchInsertService {
         toss.setTossWinner(tossNode.path("winner").asText());
         toss.setDecision(tossNode.path("decision").asText());
         tossRepository.save(toss);
-
     }
 }
