@@ -25,5 +25,9 @@ spring:
       port: 6379
     cache:
       type: redis
+  security:
+    user:
+      name: aishu
+      password: aishu123
 server:
   port: 8085

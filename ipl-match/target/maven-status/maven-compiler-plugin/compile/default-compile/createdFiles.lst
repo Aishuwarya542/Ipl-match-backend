@@ -19,11 +19,15 @@ com\indium\ipl_match\entity\Meta.class
 com\indium\ipl_match\entity\Overs.class
 com\indium\ipl_match\entity\Target.class
 com\indium\ipl_match\controller\MatchController.class
+com\indium\ipl_match\security\SecurityConfiguration.class
+com\indium\ipl_match\security\JwtUtil.class
 com\indium\ipl_match\entity\Inning.class
 com\indium\ipl_match\entity\MatchInfo.class
 com\indium\ipl_match\repository\TossRepository.class
 com\indium\ipl_match\repository\PlayerRepository.class
+com\indium\ipl_match\security\JwtAuthenticationFilter.class
 com\indium\ipl_match\entity\Wicket.class
+com\indium\ipl_match\security\AuthController.class
 com\indium\ipl_match\repository\PowerplayRepository.class
 com\indium\ipl_match\repository\MatchInfoRepository.class
 com\indium\ipl_match\repository\OfficialRepository.class

@@ -1,4 +1,5 @@
 com\indium\ipl_match\MatchQueryServiceTest.class
+com\indium\ipl_match\MatchInsertServiceTest.class
 com\indium\ipl_match\IplMatchApplicationTest.class
 com\indium\ipl_match\MatchControllerIntegrationTest.class
 com\indium\ipl_match\MatchControllerUnitTest.class
