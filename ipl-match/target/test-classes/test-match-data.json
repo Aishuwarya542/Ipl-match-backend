@@ -1,0 +1,50 @@
+{
+  "meta": {
+    "data_version": "1.0",
+    "created": "2023-09-15",
+    "revision": 1
+  },
+  "info": {
+    "event": {
+      "match_number": 100
+    },
+    "city": "City A",
+    "dates": ["2023-09-15"],
+    "venue": "Venue A",
+    "season": "Season 2023",
+    "match_type": "Test",
+    "gender": "male",
+    "overs": 50,
+    "event": {
+      "name": "Event A"
+    },
+    "player_of_match": ["Player 1"],
+    "outcome": {
+      "winner": "Team A",
+      "by": {
+        "runs": 100
+      }
+    },
+    "teams": ["Team A", "Team B"],
+    "innings": [
+      {
+        "team": "Team A",
+        "overs": [
+          {
+            "over": 1,
+            "deliveries": [
+              {
+                "batter": "Player 1",
+                "bowler": "Player 2",
+                "runs": {
+                  "batter": 4,
+                  "total": 4
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

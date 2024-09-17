@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: spring-boot-assignment
+  datasource:
+    url: jdbc:mysql://localhost:3306/ipl_match
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    jpa:
+      hibernate:
+        ddl-auto: update
+      show-sql: true
+    kafka:
+      bootstrap-servers: localhost:9092
+      properties:
+        security:
+          protocol: PLAINTEXT
+          SASL:
+            mechanism: PLAIN
+      producer:
+        key-serializer: org.apache.kafka.common.serialization.StringSerializer
+        value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    redis:
+      host: localhost
+      port: 6379
+    cache:
+      type: redis
+server:
+  port: 8085
