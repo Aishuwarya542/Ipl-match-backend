@@ -11,9 +11,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.indium</groupId>
-    <artifactId>ipl-assignment</artifactId>
+    <artifactId>ipl-assignment1</artifactId>
     <version>0.1</version>
-    <name>ipl-assignment</name>
+    <name>ipl-assignment1</name>
     <description>Demo project for Spring Boot</description>
     <url/>
     <licenses>

@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ipl-assignment-deployment
+  name: ipl-assignment1-deployment
   labels:
-    app: ipl-assignment
+    app: ipl-assignment1
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ipl-assignment
+      app: ipl-assignment1
   template:
     metadata:
       labels:
-        app: ipl-assignment
+        app: ipl-assignment1
     spec:
       containers:
-        - name: ipl-assignment
-          image: ipl-assignment:0.1
+        - name: ipl-assignment1
+          image: ipl-assignment1:0.1
           env:
             - name: KAFKA_HOST
               value: "host.docker.internal:9094"
@@ -38,12 +38,12 @@ spec:
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: ipl-assignment-hpa
+  name: ipl-assignment1-hpa
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: ipl-assignment-deployment
+    name: ipl-assignment1-deployment
   minReplicas: 1
   maxReplicas: 10
   targetCPUUtilizationPercentage: 50
@@ -52,10 +52,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ipl-assignment-service
+  name: ipl-assignment1-service
 spec:
   selector:
-    app: ipl-assignment
+    app: ipl-assignment1
   type: NodePort
   ports:
     - port: 80

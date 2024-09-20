@@ -24,7 +24,8 @@ public class SecurityConfiguration {
         http
                 .csrf(csrf -> csrf.disable())  // Disable CSRF protection
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll()  // Allow login without authentication
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/v2/api-docs/**").permitAll()// Allow login without authentication
                         .requestMatchers("/api/matches/**").authenticated()  // Protect these endpoints
                         .anyRequest().authenticated()
                 )
